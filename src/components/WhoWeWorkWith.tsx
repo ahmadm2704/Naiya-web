@@ -5,15 +5,11 @@ import { useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PlaceholderMedia from "./PlaceholderMedia";
 
-const CATEGORIES = [
-  "Beauty & Aesthetics",
-  "Hotels & Experiences",
-  "Food & Hospitality",
-  "Health & Wellness",
-  "Lifestyle & Independent Brands",
-];
-
-export default function WhoWeWorkWith() {
+export default function WhoWeWorkWith({
+  categories,
+}: {
+  categories: { id: string; label: string }[];
+}) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -43,10 +39,10 @@ export default function WhoWeWorkWith() {
 
       <div className="mt-8 overflow-hidden" ref={emblaRef}>
         <div className="flex gap-5">
-          {CATEGORIES.map((category) => (
-            <div key={category} className="min-w-[75%] flex-shrink-0 sm:min-w-[38%] lg:min-w-[28%]">
+          {categories.map((category) => (
+            <div key={category.id} className="min-w-[75%] flex-shrink-0 sm:min-w-[38%] lg:min-w-[28%]">
               <PlaceholderMedia
-                label={category}
+                label={category.label}
                 className="aspect-[4/5] w-full rounded-2xl p-6"
               />
             </div>

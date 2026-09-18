@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import ServicesAccordion from "@/components/ServicesAccordion";
 import ProcessTimeline from "@/components/ProcessTimeline";
-import { ADD_ONS } from "@/data/services";
+import { getAddOns, getProcessSteps, getServiceGroups } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services | Content Casa",
 };
 
-export default function ServicesPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ServicesPage() {
+  const [groups, addOns, steps] = await Promise.all([
+    getServiceGroups(),
+    getAddOns(),
+    getProcessSteps(),
+  ]);
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-20 sm:px-8">
       <div className="max-w-2xl">
@@ -20,18 +28,18 @@ export default function ServicesPage() {
       </div>
 
       <div className="mt-12">
-        <ServicesAccordion />
+        <ServicesAccordion groups={groups} />
       </div>
 
       <section className="mt-16">
         <h2 className="font-display text-2xl font-bold">Add-ons</h2>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {ADD_ONS.map((addon) => (
+          {addOns.map((addon) => (
             <div
-              key={addon}
+              key={addon.id}
               className="rounded-xl bg-charcoal px-5 py-4 text-sm font-medium text-white"
             >
-              {addon}
+              {addon.label}
             </div>
           ))}
         </div>
@@ -44,7 +52,7 @@ export default function ServicesPage() {
           look and remember.
         </p>
         <div className="mt-8">
-          <ProcessTimeline />
+          <ProcessTimeline steps={steps} />
         </div>
       </section>
     </div>

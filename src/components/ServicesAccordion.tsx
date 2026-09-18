@@ -3,14 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Check } from "lucide-react";
-import { SERVICE_GROUPS } from "@/data/services";
+import type { ServiceGroupWithPackages } from "@/lib/defaults";
 
-export default function ServicesAccordion() {
-  const [openId, setOpenId] = useState<string | null>(SERVICE_GROUPS[0]?.id ?? null);
+export default function ServicesAccordion({ groups }: { groups: ServiceGroupWithPackages[] }) {
+  const [openId, setOpenId] = useState<string | null>(groups[0]?.id ?? null);
 
   return (
     <div className="space-y-4">
-      {SERVICE_GROUPS.map((group) => {
+      {groups.map((group) => {
         const isOpen = openId === group.id;
         return (
           <div key={group.id} className="overflow-hidden rounded-2xl border border-charcoal/10">
@@ -31,7 +31,7 @@ export default function ServicesAccordion() {
               <div className="grid gap-6 bg-cream p-6 sm:grid-cols-3 sm:p-8">
                 {group.packages.map((pkg) => (
                   <div
-                    key={pkg.name}
+                    key={pkg.id}
                     className="flex flex-col rounded-xl bg-white p-6 shadow-sm ring-1 ring-charcoal/5"
                   >
                     <p className="font-display text-lg font-bold">{pkg.name}</p>

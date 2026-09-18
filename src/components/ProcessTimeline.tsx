@@ -1,10 +1,10 @@
-import { METHOD_STEPS } from "@/data/services";
+import type { ProcessStep } from "@/lib/defaults";
 
-export default function ProcessTimeline() {
+export default function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {METHOD_STEPS.map((step, index) => (
-        <div key={step.title} className="rounded-2xl border border-charcoal/10 p-6">
+      {steps.map((step, index) => (
+        <div key={step.id} className="rounded-2xl border border-charcoal/10 p-6">
           <span className="font-display text-3xl font-bold text-maroon">
             {String(index + 1).padStart(2, "0")}
           </span>

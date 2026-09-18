@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { HeroContent } from "@/lib/defaults";
 
-export default function Hero() {
+export default function Hero({ tagline, headline, subheadline }: HeroContent) {
   return (
     <section className="relative overflow-hidden bg-charcoal text-white">
       <div className="absolute inset-0 bg-gradient-to-br from-charcoal via-maroon/70 to-navy" />
@@ -14,7 +15,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="font-script text-4xl text-yellow sm:text-5xl"
         >
-          The home for creative visuals
+          {tagline}
         </motion.p>
 
         <motion.h1
@@ -23,7 +24,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mt-6 max-w-3xl font-display text-4xl font-bold leading-tight sm:text-6xl"
         >
-          We create visuals that make brands impossible to ignore.
+          {headline}
         </motion.h1>
 
         <motion.p
@@ -32,7 +33,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-6 max-w-xl text-lg text-white/80"
         >
-          You run your business. We&rsquo;ll create the content.
+          {subheadline}
         </motion.p>
 
         <motion.div

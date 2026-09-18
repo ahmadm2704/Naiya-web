@@ -2,13 +2,22 @@ import Hero from "@/components/Hero";
 import WhoWeWorkWith from "@/components/WhoWeWorkWith";
 import FeaturedWork from "@/components/FeaturedWork";
 import Link from "next/link";
+import { getFeaturedWork, getHero, getWorkCategories } from "@/lib/content";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [hero, categories, featuredWork] = await Promise.all([
+    getHero(),
+    getWorkCategories(),
+    getFeaturedWork(),
+  ]);
+
   return (
     <>
-      <Hero />
-      <WhoWeWorkWith />
-      <FeaturedWork />
+      <Hero {...hero} />
+      <WhoWeWorkWith categories={categories} />
+      <FeaturedWork items={featuredWork} />
 
       <section className="mx-auto max-w-6xl px-6 py-24 text-center sm:px-8">
         <h2 className="font-display text-3xl font-bold sm:text-4xl">

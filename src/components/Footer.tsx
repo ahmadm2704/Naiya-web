@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { getSettings } from "@/lib/content";
 
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -19,7 +20,9 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default function Footer() {
+export default async function Footer() {
+  const settings = await getSettings();
+
   return (
     <footer className="border-t border-white/10 bg-charcoal text-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-14 sm:px-8 md:flex-row md:items-start md:justify-between">
@@ -48,9 +51,15 @@ export default function Footer() {
               Connect
             </p>
             <div className="mt-3 flex gap-4">
-              <a href="#" aria-label="Instagram" className="hover:text-yellow"><InstagramIcon width={20} height={20} /></a>
-              <a href="#" aria-label="LinkedIn" className="hover:text-yellow"><LinkedinIcon width={20} height={20} /></a>
-              <a href="mailto:hello@contentcasa.co" aria-label="Email" className="hover:text-yellow"><Mail size={20} /></a>
+              <a href={settings.instagram_url} aria-label="Instagram" className="hover:text-yellow">
+                <InstagramIcon width={20} height={20} />
+              </a>
+              <a href={settings.linkedin_url} aria-label="LinkedIn" className="hover:text-yellow">
+                <LinkedinIcon width={20} height={20} />
+              </a>
+              <a href={`mailto:${settings.contact_email}`} aria-label="Email" className="hover:text-yellow">
+                <Mail size={20} />
+              </a>
             </div>
           </div>
         </div>

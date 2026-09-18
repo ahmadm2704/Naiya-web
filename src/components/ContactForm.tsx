@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Check } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 const HELP_OPTIONS = [
   "Content creation",
@@ -73,12 +73,13 @@ export default function ContactForm() {
   const onSubmit = async (values: FormValues) => {
     setStatus("submitting");
 
-    if (!isSupabaseConfigured || !supabase) {
+    if (!isSupabaseConfigured) {
       console.warn("Supabase is not configured yet — enquiry not saved:", values);
       setStatus("success");
       return;
     }
 
+    const supabase = createClient();
     const { error } = await supabase.from("enquiries").insert({
       name: values.name,
       company_name: values.companyName,
